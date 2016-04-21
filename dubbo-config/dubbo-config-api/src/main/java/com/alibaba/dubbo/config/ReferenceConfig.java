@@ -380,7 +380,12 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                         if (monitorUrl != null) {
                             map.put(Constants.MONITOR_KEY, URL.encode(monitorUrl.toFullString()));
                         }
-                	    urls.add(u.addParameterAndEncoded(Constants.REFER_KEY, StringUtils.toQueryString(map)));
+                        // urls.add(u.addParameterAndEncoded(Constants.REFER_KEY, StringUtils.toQueryString(map)));
+                        u=u.addParameterAndEncoded(Constants.REFER_KEY, StringUtils.toQueryString(map));
+                        if(map.containsKey(Constants.REGISTRY_GROUP_KEY)){//消费者从注册中心的分组中获取服务 //add by blueofsky on 2016-04-21.
+                            u=u.addParameter(Constants.GROUP_KEY,map.get(Constants.REGISTRY_GROUP_KEY));
+                        }
+                        urls.add(u);
                     }
             	}
             	if (urls == null || urls.size() == 0) {

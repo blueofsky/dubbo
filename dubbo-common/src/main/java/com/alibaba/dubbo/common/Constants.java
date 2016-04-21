@@ -579,6 +579,7 @@ public class Constants {
 
     public static final String GENERIC_SERIALIZATION_BEAN          = "bean";
 
+    public static final String REGISTRY_GROUP_KEY = "registry.group"; //add by blueofsky on 2016-04-21.
     /*
      * private Constants(){ }
      */

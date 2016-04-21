@@ -101,6 +101,9 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
     // 服务暴露或引用的scope,如果为local，则表示只在当前JVM内查找.
 	private String scope;
 
+    //注册中心分组，Provider和Consumer从指定的分组注册发现服务
+    private String registryGroup;
+
     protected void checkRegistry() {
         // 兼容旧版本
         if (registries == null || registries.size() == 0) {
@@ -192,6 +195,9 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
                         url = url.setProtocol(Constants.REGISTRY_PROTOCOL);
                         if ((provider && url.getParameter(Constants.REGISTER_KEY, true))
                                 || (! provider && url.getParameter(Constants.SUBSCRIBE_KEY, true))) {
+                            if(!StringUtils.isEmpty(this.getRegistryGroup())){ //add by blueofsky on 2016-04-21.
+                                url=url.addParameter(Constants.GROUP_KEY,this.getRegistryGroup());
+                            }
                             registryList.add(url);
                         }
                     }
@@ -509,4 +515,11 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
 		this.scope = scope;
 	}
 
+    public String getRegistryGroup() {
+        return registryGroup;
+    }
+
+    public void setRegistryGroup(String registryGroup) {
+        this.registryGroup = registryGroup;
+    }
 }
